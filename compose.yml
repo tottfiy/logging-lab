@@ -1,0 +1,23 @@
+# version: "3"
+
+name: prometheus-lab
+services:
+  prometheus:
+    build: .
+    ports:
+      - "9090:9090"
+    container_name: prometheus-lab
+  grafana:
+    image: grafana/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    ports:
+      - "3000:3000"
+    container_name: grafana-app
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+
+volumes:
+  grafana-storage: {}
